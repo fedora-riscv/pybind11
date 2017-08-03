@@ -6,7 +6,7 @@
 
 Name:    pybind11		
 Version: 2.0.1
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
@@ -78,6 +78,9 @@ make -C python3 check %{?_smp_mflags}
 
 
 %changelog
+* Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.1-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.1-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
