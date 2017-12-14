@@ -5,17 +5,12 @@
 %global debug_package %{nil}
 
 Name:    pybind11		
-Version: 2.0.1
-Release: 7%{?dist}
+Version: 2.2.1
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
 Source0: https://github.com/pybind/pybind11/archive/v%{version}.tar.gz
-
-# Disable numpy dtypes test as guided in https://github.com/pybind/pybind11/issues/694
-Patch0:  pybind11-2.0.1-tests.patch
-# Fix tests that are broken on bigendian systems, adapted from https://github.com/pybind/pybind11/pull/699
-Patch1:  pybind11-2.0.1-byteorder.patch
 
 # These are only needed for the checks
 BuildRequires: python2-devel
@@ -50,9 +45,7 @@ C++ code.
 This package contains the development headers for pybind11.
 
 %prep
-%setup -q
-%patch0 -p1 -b .tests
-%patch1 -p1 -b .order
+%autosetup -p1
 
 %build
 for py in python2 python3; do
@@ -78,6 +71,9 @@ make -C python3 check %{?_smp_mflags}
 
 
 %changelog
+* Thu Dec 14 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.1-1
+- Update to latest version
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.1-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
