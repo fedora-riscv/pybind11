@@ -6,11 +6,13 @@
 
 Name:    pybind11		
 Version: 2.2.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
+# Little-endian fix
+Patch0: 1287.patch
 
 # These are only needed for the checks
 BuildRequires: python2-devel
@@ -71,6 +73,9 @@ make -C python3 check %{?_smp_mflags}
 
 
 %changelog
+* Sat Feb 17 2018 Susi Lehtola <jussilehtola@fedorapeople.org> - 2.2.2-2
+- Fix FTBS by patch from upstream.
+
 * Wed Feb 14 2018 Susi Lehtola <jussilehtola@fedorapeople.org> - 2.2.2-1
 - Update to 2.2.2.
 
