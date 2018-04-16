@@ -6,20 +6,27 @@
 
 Name:    pybind11		
 Version: 2.2.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
 # Little-endian fix
-Patch0: 1287.patch
+Patch0:  1287.patch
+
+# Don't use pip to get path to headers
+Patch1:  pybind11-2.2.2-nopip.patch
+
+# Needed to build the python libraries
+BuildRequires: python2-devel
+BuildRequires: python2-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-setuptools
 
 # These are only needed for the checks
-BuildRequires: python2-devel
 BuildRequires: python2-pytest
 BuildRequires: python2-numpy
 BuildRequires: python2-scipy
-BuildRequires: python3-devel
 BuildRequires: python3-pytest
 BuildRequires: python3-numpy
 BuildRequires: python3-scipy
@@ -27,10 +34,13 @@ BuildRequires: eigen3-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
 
-%description
-pybind11 is a lightweight header-only library that exposes C++ types
-in Python and vice versa, mainly to create Python bindings of existing
+%global base_description \
+pybind11 is a lightweight header-only library that exposes C++ types \
+in Python and vice versa, mainly to create Python bindings of existing \
 C++ code.
+
+%description
+%{base_description}
 
 %package devel
 Summary:  Development headers for pybind11
@@ -40,23 +50,47 @@ Provides: %{name}-static = %{version}-%{release}
 Requires: cmake
 
 %description devel
-pybind11 is a lightweight header-only library that exposes C++ types
-in Python and vice versa, mainly to create Python bindings of existing
-C++ code.
+%{base_description}
 
 This package contains the development headers for pybind11.
 
+%package -n     python2-%{name}
+Summary:        %{summary}
+%{?python_provide:%python_provide python2-%{srcname}}
+Requires: %{name}-devel%{?_isa} = %{version}-%{release}
+
+%description -n python2-%{name}
+%{base_description}
+
+This package contains the Python 2 files.
+
+%package -n     python3-%{name}
+Summary:        %{summary}
+%{?python_provide:%python_provide python3-%{srcname}}
+
+Requires: %{name}-devel%{?_isa} = %{version}-%{release}
+
+%description -n python3-%{name}
+%{base_description}
+
+This package contains the Python 3 files.
+
+
 %prep
-%autosetup -p1
+%setup -q
+%patch0 -p1 -b .endian
+%patch1 -p1 -b .nopip
 
 %build
 for py in python2 python3; do
-mkdir $py
-cd $py
-%cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/$py
-make %{?_smp_mflags}
-cd ..
+    mkdir $py
+    cd $py
+    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py
+    make %{?_smp_mflags}
+    cd ..
 done
+%py2_build
+%py3_build
 
 %check
 make -C python2 check %{?_smp_mflags}
@@ -64,6 +98,9 @@ make -C python3 check %{?_smp_mflags}
 
 %install
 %make_install -C python2
+# Force install to arch-ful directories instead.
+PYBIND11_USE_CMAKE=true %py2_install "--install-purelib" "%{python2_sitearch}"
+PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 
 %files devel
 %license LICENSE
@@ -71,8 +108,19 @@ make -C python3 check %{?_smp_mflags}
 %{_includedir}/pybind11/
 %{_datadir}/cmake/pybind11/
 
+%files -n python2-%{name}
+%{python2_sitearch}/%{name}/
+%{python2_sitearch}/%{name}-%{version}-py?.?.egg-info
+
+%files -n python3-%{name}
+%{python3_sitearch}/%{name}/
+%{python3_sitearch}/%{name}-%{version}-py?.?.egg-info
+
 
 %changelog
+* Mon Apr 16 2018 Susi Lehtola <jussilehtola@fedorapeople.org> - 2.2.2-3
+- Add Python subpackages based on Elliott Sales de Andrade's patch.
+
 * Sat Feb 17 2018 Susi Lehtola <jussilehtola@fedorapeople.org> - 2.2.2-2
 - Fix FTBS by patch from upstream.
 
