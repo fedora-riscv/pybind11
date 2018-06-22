@@ -5,17 +5,15 @@
 %global debug_package %{nil}
 
 Name:    pybind11		
-Version: 2.2.2
-Release: 4%{?dist}
+Version: 2.2.3
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
-# Little-endian fix
-Patch0:  1287.patch
 
 # Don't use pip to get path to headers
-Patch1:  pybind11-2.2.2-nopip.patch
+Patch1:  pybind11-2.2.3-nopip.patch
 
 # Needed to build the python libraries
 BuildRequires: python2-devel
@@ -78,7 +76,6 @@ This package contains the Python 3 files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .endian
 %patch1 -p1 -b .nopip
 
 %build
@@ -118,6 +115,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 
 
 %changelog
+* Fri Jun 22 2018 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.2.3-1
+- Update to 2.2.3.
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.2.2-4
 - Rebuilt for Python 3.7
 
