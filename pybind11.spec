@@ -6,7 +6,7 @@
 
 Name:    pybind11		
 Version: 2.2.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
@@ -115,6 +115,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 
 
 %changelog
+* Sat Jun 23 2018 Miro Hrončok <mhroncok@redhat.com> - 2.2.3-2
+- Rebuilt for Python 3.7
+
 * Fri Jun 22 2018 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.2.3-1
 - Update to 2.2.3.
 
