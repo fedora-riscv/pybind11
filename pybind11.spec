@@ -4,9 +4,17 @@
 # https://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Header_Only_Libraries
 %global debug_package %{nil}
 
+%if 0%{?fedora} >= 30
+%global python2_enabled 0
+%else
+%global python2_enabled 1
+%endif
+%global python3_enabled 1
+
+
 Name:    pybind11		
-Version: 2.2.3
-Release: 3%{?dist}
+Version: 2.2.4
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD	
 URL:	 https://github.com/pybind/pybind11	
@@ -15,19 +23,26 @@ Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{versio
 # Don't use pip to get path to headers
 Patch1:  pybind11-2.2.3-nopip.patch
 
+%if %{python2_enabled}
 # Needed to build the python libraries
 BuildRequires: python2-devel
 BuildRequires: python2-setuptools
-BuildRequires: python3-devel
-BuildRequires: python3-setuptools
-
 # These are only needed for the checks
 BuildRequires: python2-pytest
 BuildRequires: python2-numpy
 BuildRequires: python2-scipy
+%endif
+
+%if %{python3_enabled}
+# Needed to build the python libraries
+BuildRequires: python3-devel
+BuildRequires: python3-setuptools
+# These are only needed for the checks
 BuildRequires: python3-pytest
 BuildRequires: python3-numpy
 BuildRequires: python3-scipy
+%endif
+
 BuildRequires: eigen3-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -52,6 +67,7 @@ Requires: cmake
 
 This package contains the development headers for pybind11.
 
+%if %{python2_enabled}
 %package -n     python2-%{name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{srcname}}
@@ -61,43 +77,74 @@ Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 %{base_description}
 
 This package contains the Python 2 files.
+%endif
 
+%if %{python3_enabled}
 %package -n     python3-%{name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{srcname}}
 
 Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 
+%if !%{python2_enabled}
+# Take care of upgrade path
+Obsoletes:      python2-%{name} < %{version}-%{release}
+%endif
+
 %description -n python3-%{name}
 %{base_description}
 
 This package contains the Python 3 files.
-
+%endif
 
 %prep
 %setup -q
 %patch1 -p1 -b .nopip
 
 %build
-for py in python2 python3; do
+pys=""
+%if %{python2_enabled}
+pys="$py python2"
+%endif
+%if %{python3_enabled}
+pys="$py python3"
+%endif
+for py in $pys; do
     mkdir $py
     cd $py
     %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py
     make %{?_smp_mflags}
     cd ..
 done
+
+%if %{python2_enabled}
 %py2_build
+%endif
+%if %{python3_enabled}
 %py3_build
+%endif
 
 %check
+%if %{python2_enabled}
 make -C python2 check %{?_smp_mflags}
+%endif
+%if %{python3_enabled}
 make -C python3 check %{?_smp_mflags}
+%endif
 
 %install
+%if %{python2_enabled}
 %make_install -C python2
+%elif %{python3_enabled}
+%make_install -C python3
+%endif
 # Force install to arch-ful directories instead.
+%if %{python2_enabled}
 PYBIND11_USE_CMAKE=true %py2_install "--install-purelib" "%{python2_sitearch}"
+%endif
+%if %{python3_enabled}
 PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
+%endif
 
 %files devel
 %license LICENSE
@@ -105,16 +152,23 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %{_includedir}/pybind11/
 %{_datadir}/cmake/pybind11/
 
+%if %{python2_enabled}
 %files -n python2-%{name}
 %{python2_sitearch}/%{name}/
 %{python2_sitearch}/%{name}-%{version}-py?.?.egg-info
+%endif
 
+%if %{python3_enabled}
 %files -n python3-%{name}
 %{python3_sitearch}/%{name}/
 %{python3_sitearch}/%{name}-%{version}-py?.?.egg-info
-
+%endif
 
 %changelog
+* Tue Sep 18 2018 Susi Lehtola - 2.2.4-1
+- Remove python2 packages for Fedora >= 30.
+- Update to 2.2.4.
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
