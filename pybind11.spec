@@ -9,6 +9,7 @@
 %else
 %global python2_enabled 1
 %endif
+
 %global python3_enabled 1
 
 
@@ -133,9 +134,11 @@ make -C python3 check %{?_smp_mflags}
 %endif
 
 %install
+# Doesn't matter if both installs run
 %if %{python2_enabled}
 %make_install -C python2
-%elif %{python3_enabled}
+%endif
+%if %{python3_enabled}
 %make_install -C python3
 %endif
 # Force install to arch-ful directories instead.
