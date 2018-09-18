@@ -112,7 +112,7 @@ pys="$py python3"
 for py in $pys; do
     mkdir $py
     cd $py
-    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py
+    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE 
     make %{?_smp_mflags}
     cd ..
 done
