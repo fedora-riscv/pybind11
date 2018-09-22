@@ -105,10 +105,10 @@ This package contains the Python 3 files.
 %build
 pys=""
 %if %{python2_enabled}
-pys="$py python2"
+pys="$pys python2"
 %endif
 %if %{python3_enabled}
-pys="$py python3"
+pys="$pys python3"
 %endif
 for py in $pys; do
     mkdir $py
