@@ -13,12 +13,12 @@
 %global python3_enabled 1
 
 
-Name:    pybind11		
+Name:    pybind11
 Version: 2.2.4
 Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
-License: BSD	
-URL:	 https://github.com/pybind/pybind11	
+License: BSD
+URL:	 https://github.com/pybind/pybind11
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
 
 # Don't use pip to get path to headers
@@ -113,7 +113,7 @@ pys="$py python3"
 for py in $pys; do
     mkdir $py
     cd $py
-    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE 
+    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE
     make %{?_smp_mflags}
     cd ..
 done
