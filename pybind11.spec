@@ -103,7 +103,7 @@ This package contains the Python 3 files.
 %prep
 %setup -q
 %patch1 -p1 -b .nopip
-%patch2 -p0 -b .pytest4
+%patch2 -p1 -b .pytest4
 
 %build
 pys=""
