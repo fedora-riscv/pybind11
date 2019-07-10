@@ -14,8 +14,8 @@
 
 
 Name:    pybind11
-Version: 2.2.4
-Release: 3%{?dist}
+Version: 2.3.0
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -23,8 +23,6 @@ Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{versio
 
 # Don't use pip to get path to headers
 Patch1:  pybind11-2.2.3-nopip.patch
-# Fix pytest 4 incompatibility
-Patch2:  https://github.com/pybind/pybind11/commit/e7ef34f23f194cfa40bdbf967c6d34712261a4ee.patch
 
 %if %{python2_enabled}
 # Needed to build the python libraries
@@ -103,7 +101,6 @@ This package contains the Python 3 files.
 %prep
 %setup -q
 %patch1 -p1 -b .nopip
-%patch2 -p1 -b .pytest4
 
 %build
 pys=""
@@ -171,6 +168,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Wed Jul 10 2019 Susi Lehtola - 2.3.0-1
+- Update to 2.3.0.
+
 * Fri May 03 2019 Susi Lehtola - 2.2.4-3
 - Fix incompatibility with pytest 4.0.
 
