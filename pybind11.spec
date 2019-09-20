@@ -22,7 +22,7 @@ URL:	 https://github.com/pybind/pybind11
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
 
 # Don't use pip to get path to headers
-Patch1:  pybind11-2.2.3-nopip.patch
+Patch1:  pybind11-2.4.0-nopip.patch
 
 %if %{python2_enabled}
 # Needed to build the python libraries
