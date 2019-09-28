@@ -14,7 +14,7 @@
 
 
 Name:    pybind11
-Version: 2.4.1
+Version: 2.4.2
 Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
@@ -168,6 +168,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Sat Sep 28 2019 Susi Lehtola - 2.4.2-1
+- Update to 2.4.2.
+
 * Fri Sep 20 2019 Susi Lehtola - 2.4.1-1
 - Update to 2.4.1.
 
