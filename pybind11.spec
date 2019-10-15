@@ -14,8 +14,8 @@
 
 
 Name:    pybind11
-Version: 2.4.2
-Release: 2%{?dist}
+Version: 2.4.3
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -23,8 +23,6 @@ Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{versio
 
 # Don't use pip to get path to headers
 Patch1:  pybind11-2.4.0-nopip.patch
-# Patch for Python 3.8 compatibility
-Patch2:  https://github.com/pybind/pybind11/commit/6cb584e9de6e8d54f5576c299a308f89bfdcb519.patch
 
 %if %{python2_enabled}
 # Needed to build the python libraries
@@ -103,7 +101,6 @@ This package contains the Python 3 files.
 %prep
 %setup -q
 %patch1 -p1 -b .nopip
-%patch2 -p1 -b .python38
 
 %build
 pys=""
@@ -171,6 +168,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Tue Oct 15 2019 Susi Lehtola - 2.4.3-1
+- Update to 2.4.3.
+
 * Tue Oct 08 2019 Susi Lehtola - 2.4.2-2
 - Fix Python 3.8 incompatibility.
 
