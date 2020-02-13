@@ -1,7 +1,7 @@
-diff -up pybind11-2.2.3/pybind11/__init__.py.orig pybind11-2.2.3/pybind11/__init__.py
---- pybind11-2.2.3/pybind11/__init__.py.orig	2018-06-22 14:45:24.783361962 +0200
-+++ pybind11-2.2.3/pybind11/__init__.py	2018-06-22 14:46:31.708289349 +0200
-@@ -1,28 +1,4 @@
+diff -up pybind11-2.4.0/pybind11/__init__.py.nopip pybind11-2.4.0/pybind11/__init__.py
+--- pybind11-2.4.0/pybind11/__init__.py.nopip	2019-09-19 23:06:22.000000000 +0200
++++ pybind11-2.4.0/pybind11/__init__.py	2019-09-20 08:38:31.351226101 +0200
+@@ -1,36 +1,4 @@
  from ._version import version_info, __version__  # noqa: F401 imported but unused
  
 -
@@ -14,9 +14,17 @@ diff -up pybind11-2.2.3/pybind11/__init__.py.orig pybind11-2.2.3/pybind11/__init
 -    virtualenv = hasattr(sys, 'real_prefix') or \
 -        sys.prefix != getattr(sys, "base_prefix", sys.prefix)
 -
+-    # Are we running in a conda environment?
+-    conda = os.path.exists(os.path.join(sys.prefix, 'conda-meta'))
+-
 -    if virtualenv:
 -        return os.path.join(sys.prefix, 'include', 'site',
 -                            'python' + sys.version[:3])
+-    elif conda:
+-        if os.name == 'nt':
+-            return os.path.join(sys.prefix, 'Library', 'include')
+-        else:
+-            return os.path.join(sys.prefix, 'include')
 -    else:
 -        dist = Distribution({'name': 'pybind11'})
 -        dist.parse_config_files()
