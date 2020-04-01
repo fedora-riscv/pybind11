@@ -14,15 +14,15 @@
 
 
 Name:    pybind11
-Version: 2.4.3
-Release: 2%{?dist}
+Version: 2.5.0
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
 
-# Don't use pip to get path to headers
-Patch1:  pybind11-2.4.0-nopip.patch
+# Patch out header path
+Patch1:  pybind11-2.5.0-hpath.patch
 
 %if %{python2_enabled}
 # Needed to build the python libraries
@@ -100,7 +100,7 @@ This package contains the Python 3 files.
 
 %prep
 %setup -q
-%patch1 -p1 -b .nopip
+%patch1 -p1 -b .hpath
 
 %build
 pys=""
@@ -168,6 +168,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Wed Apr 01 2020 Susi Lehtola - 2.5.0-1
+- Update to 2.5.0.
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
