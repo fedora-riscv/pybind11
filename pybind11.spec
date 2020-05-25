@@ -4,6 +4,9 @@
 # https://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Header_Only_Libraries
 %global debug_package %{nil}
 
+# Whether to run the tests, enabled by default
+%bcond_without tests
+
 %if 0%{?fedora} >= 30
 %global python2_enabled 0
 %else
@@ -29,9 +32,11 @@ Patch1:  pybind11-2.5.0-hpath.patch
 BuildRequires: python2-devel
 BuildRequires: python2-setuptools
 # These are only needed for the checks
+%if %{with tests}
 BuildRequires: python2-pytest
 BuildRequires: python2-numpy
 BuildRequires: python2-scipy
+%endif
 %endif
 
 %if %{python3_enabled}
@@ -39,9 +44,11 @@ BuildRequires: python2-scipy
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 # These are only needed for the checks
+%if %{with tests}
 BuildRequires: python3-pytest
 BuildRequires: python3-numpy
 BuildRequires: python3-scipy
+%endif
 %endif
 
 BuildRequires: eigen3-devel
@@ -113,7 +120,7 @@ pys="$pys python3"
 for py in $pys; do
     mkdir $py
     cd $py
-    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE
+    %cmake .. -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE %{!?with_tests:-DPYBIND11_TEST=OFF}
     make %{?_smp_mflags}
     cd ..
 done
@@ -125,12 +132,14 @@ done
 %py3_build
 %endif
 
+%if %{with tests}
 %check
 %if %{python2_enabled}
 make -C python2 check %{?_smp_mflags}
 %endif
 %if %{python3_enabled}
 make -C python3 check %{?_smp_mflags}
+%endif
 %endif
 
 %install
