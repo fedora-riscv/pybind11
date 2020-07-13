@@ -173,7 +173,7 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %if %{python3_enabled}
 %files -n python3-%{name}
 %{python3_sitearch}/%{name}/
-%{python3_sitearch}/%{name}-%{version}-py?.?.egg-info
+%{python3_sitearch}/%{name}-%{version}-py%{python3_version}.egg-info
 %endif
 
 %changelog
