@@ -121,7 +121,6 @@ for py in $pys; do
     mkdir $py
     %cmake -B $py -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE %{!?with_tests:-DPYBIND11_TEST=OFF}
     %make_build -C $py
-    cd ..
 done
 
 %if %{python2_enabled}
