@@ -7,7 +7,7 @@
 # Whether to run the tests, enabled by default
 %bcond_without tests
 
-%if 0%{?fedora} >= 30
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 9
 %global python2_enabled 0
 %else
 %global python2_enabled 1
@@ -175,6 +175,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Wed Aug 12 2020 Merlin Mathesius <mmathesi@redhat.com> - 2.5.0-5
+- Drop Python 2 support for ELN and RHEL9+
+
 * Wed Aug 05 2020 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.5.0-6
 - Adapt to new CMake macros.
 
