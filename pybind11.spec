@@ -17,8 +17,8 @@
 
 
 Name:    pybind11
-Version: 2.5.0
-Release: 5%{?dist}
+Version: 2.6.0
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -175,6 +175,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Mon Nov 09 2020 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.6.0-1
+- Update to 2.6.0.
+
 * Wed Aug 12 2020 Merlin Mathesius <mmathesi@redhat.com> - 2.5.0-5
 - Drop Python 2 support for ELN and RHEL9+
 
