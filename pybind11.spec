@@ -15,7 +15,6 @@
 
 %global python3_enabled 1
 
-
 Name:    pybind11
 Version: 2.6.1
 Release: 1%{?dist}
@@ -177,9 +176,6 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %changelog
 * Thu Nov 12 2020 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.6.1-1
 - Update to 2.6.1.
-
-* Mon Nov 09 2020 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.6.0-1
-- Update to 2.6.0.
 
 * Wed Aug 12 2020 Merlin Mathesius <mmathesi@redhat.com> - 2.5.0-5
 - Drop Python 2 support for ELN and RHEL9+
