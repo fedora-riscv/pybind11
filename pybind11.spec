@@ -157,7 +157,7 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 
 %files devel
 %license LICENSE
-%doc README.md
+%doc README.rst
 %{_includedir}/pybind11/
 %{_datadir}/cmake/pybind11/
 
