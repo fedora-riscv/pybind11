@@ -160,6 +160,7 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %doc README.rst
 %{_includedir}/pybind11/
 %{_datadir}/cmake/pybind11/
+%{_bindir}/pybind11-config
 
 %if %{python2_enabled}
 %files -n python2-%{name}
