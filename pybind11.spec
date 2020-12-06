@@ -77,7 +77,7 @@ This package contains the development headers for pybind11.
 %if %{python2_enabled}
 %package -n     python2-%{name}
 Summary:        %{summary}
-%{?python_provide:%python_provide python2-%{srcname}}
+%{?python_provide:%python_provide python2-pybind11}
 Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 
 %description -n python2-%{name}
@@ -89,7 +89,7 @@ This package contains the Python 2 files.
 %if %{python3_enabled}
 %package -n     python3-%{name}
 Summary:        %{summary}
-%{?python_provide:%python_provide python3-%{srcname}}
+%{?python_provide:%python_provide python3-pybind11}
 
 Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 
