@@ -26,6 +26,7 @@ Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{versio
 # Patch out header path
 Patch1:  pybind11-2.6.1-hpath.patch
 
+BuildRequires: make
 %if %{python2_enabled}
 # Needed to build the python libraries
 BuildRequires: python2-devel
