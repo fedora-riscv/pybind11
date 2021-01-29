@@ -119,7 +119,11 @@ pys="$pys python3"
 %endif
 for py in $pys; do
     mkdir $py
-    %cmake -B $py -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE %{!?with_tests:-DPYBIND11_TEST=OFF}
+    # When -DCMAKE_BUILD_TYPE is set to Release, the tests in %%check might segfault.
+    # However, we do not ship any binaries, and therefore Debug
+    # build type does not affect the results.
+    # https://bugzilla.redhat.com/show_bug.cgi?id=1921199
+    %cmake -B $py -DCMAKE_BUILD_TYPE=Debug -DPYTHON_EXECUTABLE=%{_bindir}/$py -DPYBIND11_INSTALL=TRUE -DUSE_PYTHON_INCLUDE_DIR=FALSE %{!?with_tests:-DPYBIND11_TEST=OFF}
     %make_build -C $py
 done
 
