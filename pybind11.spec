@@ -15,7 +15,7 @@
 
 Name:    pybind11
 Version: 2.4.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -62,6 +62,15 @@ Summary:  Development headers for pybind11
 Provides: %{name}-static = %{version}-%{release}
 # For dir ownership
 Requires: cmake
+
+# This package does not have namespaced file locations, so if the pybind11-devel
+# package is also built for a different Python stack in RHEL or inside some
+# module, the files between the two packages will conflict. Therefore, each
+# pybind11-devel package should conflict with any other of lower version. That
+# way all packages will conflict among each other, but if there's an update in
+# the future that makes the package non-conflicting, the future versions can
+# stop the conflicts.
+Conflicts:  %{name}-devel < %{version}-%{release}
 
 %description devel
 %{base_description}
@@ -168,6 +177,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Fri Jan 29 2021 Tomas Orsava <torsava@redhat.com> - 2.4.3-3
+- Add Conflicts with lower versions of pybind11-devel
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
