@@ -16,8 +16,8 @@
 %global python3_enabled 1
 
 Name:    pybind11
-Version: 2.6.2
-Release: 3%{?dist}
+Version: 2.7.0
+Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -180,6 +180,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Sat Jul 17 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.7.0-1
+- Update to 2.7.0.
+
 * Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 2.6.2-3
 - Rebuilt for Python 3.10
 
