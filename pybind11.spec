@@ -183,6 +183,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 * Wed Aug 04 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.7.1-1
 - Update to 2.7.1.
 
+* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.7.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Sat Jul 17 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.7.0-1
 - Update to 2.7.0.
 
