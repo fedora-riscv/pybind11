@@ -16,7 +16,7 @@
 %global python3_enabled 1
 
 Name:    pybind11
-Version: 2.7.0
+Version: 2.7.1
 Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
@@ -180,6 +180,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Wed Aug 04 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.7.1-1
+- Update to 2.7.1.
+
 * Sat Jul 17 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.7.0-1
 - Update to 2.7.0.
 
