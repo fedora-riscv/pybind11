@@ -16,14 +16,12 @@
 %global python3_enabled 1
 
 Name:    pybind11
-Version: 2.8.1
+Version: 2.9.0
 Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
-# 2021-11-26 for some reason this doesn't work anymore
-# Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
-Source0: https://github.com/pybind/pybind11/archive/refs/tags/v%{version}.tar.gz
+Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
 
 # Patch out header path
 Patch1:  pybind11-2.8.1-hpath.patch
@@ -182,6 +180,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Wed Dec 29 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.9.0-1
+- Update to 2.9.0.
+
 * Fri Nov 26 2021 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.8.1-1
 - Update to 2.8.1.
 
