@@ -25,6 +25,8 @@ Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{versio
 
 # Patch out header path
 Patch1:  pybind11-2.8.1-hpath.patch
+# Patch to fix tests for newer numpy
+Patch2:  https://github.com/pybind/pybind11/pull/3682.patch
 
 BuildRequires: make
 %if %{python2_enabled}
@@ -108,6 +110,7 @@ This package contains the Python 3 files.
 %prep
 %setup -q
 %patch1 -p1 -b .hpath
+%patch2 -p1 -b .numpy
 
 %build
 pys=""
