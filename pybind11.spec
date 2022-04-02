@@ -16,7 +16,7 @@
 %global python3_enabled 1
 
 Name:    pybind11
-Version: 2.9.1
+Version: 2.9.2
 Release: 1%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
@@ -25,8 +25,6 @@ Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{versio
 
 # Patch out header path
 Patch1:  pybind11-2.8.1-hpath.patch
-# Patch to fix tests for newer numpy
-Patch2:  https://github.com/pybind/pybind11/pull/3682.patch
 
 BuildRequires: make
 %if %{python2_enabled}
@@ -110,7 +108,6 @@ This package contains the Python 3 files.
 %prep
 %setup -q
 %patch1 -p1 -b .hpath
-%patch2 -p1 -b .numpy
 
 %build
 pys=""
@@ -183,6 +180,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Sat Apr 02 2022 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.9.2-1
+- Update to 2.9.2.
+
 * Tue Feb 08 2022 Susi Lehtola <jussilehtola@fedoraproject.org> - 2.9.1-1
 - Update to 2.9.1.
 
