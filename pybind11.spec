@@ -1,4 +1,3 @@
-%global _without_tests 1
 # While the headers are architecture independent, the package must be
 # built separately on all architectures so that the tests are run
 # properly. See also
@@ -18,7 +17,7 @@
 
 Name:    pybind11
 Version: 2.9.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -181,6 +180,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Tue Jun 14 2022 Python Maint <python-maint@redhat.com> - 2.9.2-3
+- Rebuilt for Python 3.11
+
 * Mon Jun 13 2022 Python Maint <python-maint@redhat.com> - 2.9.2-2
 - Bootstrap for Python 3.11
 
