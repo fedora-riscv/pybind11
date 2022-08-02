@@ -24,7 +24,7 @@ URL:	 https://github.com/pybind/pybind11
 Source0: https://github.com/pybind/pybind11/archive/v%{version}/%{name}-%{version}.tar.gz
 
 # Patch out header path
-Patch1:  pybind11-2.8.1-hpath.patch
+Patch1:  pybind11-2.10.0-hpath.patch
 
 BuildRequires: make
 %if %{python2_enabled}
