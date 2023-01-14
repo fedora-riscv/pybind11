@@ -5,7 +5,8 @@
 %global debug_package %{nil}
 
 # Whether to run the tests, enabled by default
-%bcond_without tests
+# disable it for bootstrap on riscv64
+%bcond_with tests
 
 %if 0%{?fedora} >= 30 || 0%{?rhel} >= 9
 %global python2_enabled 0
@@ -17,7 +18,7 @@
 
 Name:    pybind11
 Version: 2.10.3
-Release: 1%{?dist}
+Release: 1~bootstrap%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -181,6 +182,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %endif
 
 %changelog
+* Jan 14 2023 Liu Yang <Yang.Liu.sn@gmail.com> -2.10.3-1~bootstrap
+- Disable tests for riscv64 bootstrap.
+
 * Mon Jan 09 2023 Jonathan Wright <jonathan@almalinux.org> - 2.10.3-1
 - Update to 2.10.3 rhbz#2155679
 
