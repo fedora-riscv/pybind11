@@ -5,7 +5,7 @@
 %global debug_package %{nil}
 
 # Whether to run the tests, enabled by default
-%bcond_without tests
+%bcond_with tests
 
 %if 0%{?fedora} >= 30 || 0%{?rhel} >= 9
 %global python2_enabled 0
@@ -17,7 +17,7 @@
 
 Name:    pybind11
 Version: 2.11.1
-Release: 1%{?dist}
+Release: 1.rv64~bootstrap%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
